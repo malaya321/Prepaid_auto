@@ -96,7 +96,7 @@ export const styles = StyleSheet.create({
       },
     
       skiptext: {
-        color: Colors.white,
+        color: Colors.black,
         textAlign: 'center',
       },
 
