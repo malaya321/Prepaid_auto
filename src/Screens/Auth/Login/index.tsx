@@ -84,21 +84,20 @@ const Login = (props: any) => {
             placeholder="Enter Mobile Number"
             // onChangeText={handleChange}
             // value={username}
-            containerStyle={{marginTop: 10, height: 60, width: '100%',textAlign: 'center'}}
+            containerStyle={{marginTop: 10, height: 50, width: '100%',textAlign: 'center'}}
             placeholderTextColor="#702963"
           />
-        </View>
-        <View style={styles.btnContainer}>
+           <View style={styles.btnContainer}>
               <AnimatedTouchable
-                styles={{ marginTop: 10 }}
-                width={'95%'}
+                 styles={{ marginTop:10 }}
+                width={'100%'}
                 // loader={prop.loader}
                 title={Strings.SEND_OTP}
-                // onPress={() => {
-                //   otpVerification(value);
+                onPress={() => {
+                  // otpVerification(value);
 
-                //   // setLoading(true)
-                // }}
+                  // setLoading(true)
+                }}
               />
                
               
@@ -111,6 +110,8 @@ const Login = (props: any) => {
                 <Text style={{ color: '#FDC91C' }}> Privacy Policy and T&Cs</Text>{' '}
               </Text>
             </Pressable>
+        </View>
+       
       </Animated.View>
 
     </View>

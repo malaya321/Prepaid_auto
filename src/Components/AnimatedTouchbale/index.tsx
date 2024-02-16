@@ -83,7 +83,7 @@ const AnimatedTouchable: React.FC<AnimatedBtnProps> = ({
           {loader ? (
             <ActivityIndicator color={Colors.white} />
           ) : (
-            <Text style={{color: Colors.black, fontSize:fontSize|| 18,fontFamily:CommonFonts.buttonTextFont,marginTop:3}}>{title}</Text>
+            <Text style={{color: Colors.white, fontSize:fontSize|| 18,fontFamily:CommonFonts.buttonTextFont,marginTop:3}}>{title}</Text>
           )}
 
         </TouchableOpacity>

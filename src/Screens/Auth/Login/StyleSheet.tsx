@@ -49,10 +49,10 @@ export const styles = StyleSheet.create({
         zIndex: 999,
         backgroundColor: 'white',
         width: '90%',
-        height: '45%',
+        height: '40%',
         borderRadius:50,
         alignSelf: 'center',
-        top: '30%',
+        top: '35%',
         ...Platform.select({
           ios: {
             shadowColor: 'black',
