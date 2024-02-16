@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View,Dimensions,Platform } from 'react-native'
+import Colors from '../../../Constans/Colors';
 
 const { width, height } = Dimensions.get('window');
 
@@ -81,6 +82,22 @@ export const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderBottomLeftRadius:55,
         borderBottomRightRadius:55
+      },
+      skipbutton: {
+        //  backgroundColor:'black',
+        width:Platform.OS==='ios'?'90%': '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf:'center',
+    padding:Platform.OS==='android'?5:10,
+    marginTop:10,
+    marginBottom:20,
+        //  marginLeft:20
+      },
+    
+      skiptext: {
+        color: Colors.white,
+        textAlign: 'center',
       },
 
 })

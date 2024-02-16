@@ -105,7 +105,14 @@ const Login = (props: any) => {
 
               {/* Your buttons or other UI elements */}
             </View>
+            <Pressable style={styles.skipbutton}>
+              <Text style={styles.skiptext}>
+                By proceeding, you agree to stayatpurijagannatha's
+                <Text style={{ color: '#FDC91C' }}> Privacy Policy and T&Cs</Text>{' '}
+              </Text>
+            </Pressable>
       </Animated.View>
+
     </View>
   );
 };
