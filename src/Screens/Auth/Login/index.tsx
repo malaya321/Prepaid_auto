@@ -94,6 +94,10 @@ const Login = (props: any) => {
                 // loader={prop.loader}
                 title={Strings.SEND_OTP}
                 onPress={() => {
+                  navigation.navigate('Otp', {
+                    phone: loginSignUp,
+                    item: '',
+                  });
                   // otpVerification(value);
 
                   // setLoading(true)

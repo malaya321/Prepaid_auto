@@ -1,7 +1,8 @@
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet, Platform,Dimensions} from 'react-native';
 
 import CommonFonts from '../../../Constans/CommonFonts';
 import Colors from '../../../Constans/Colors';
+const { width, height } = Dimensions.get('window');
 
 
 export const CELL_SIZE = 55;
@@ -11,38 +12,11 @@ export const NOT_EMPTY_CELL_BG_COLOR = '#3557b7';
 export const ACTIVE_CELL_BG_COLOR = '#f7fafe';
 import {moderateScale, verticalScale, scale} from 'react-native-size-matters';
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: Colors.Primary,
-    // height:'100%'
-    // paddingTop: '30%',
-  },
-  containerdata: {
-    // flex: 1,
-    // backgroundColor: Colors.Primary,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems:'center',
-    height:'100%'
-    
-   
-    // paddingTop: '30%',
-  },
-  logoStyle: {
-    alignSelf: 'center',
-  },
-  loginWhithAcStyle: {
-    textAlign: 'center',
-    fontSize: scale(18),
-    color: Colors.white,
-    fontFamily: CommonFonts.normalHeading,
-    marginVertical: verticalScale(15),
-  },
-  logoimageStyle: {
-    height: moderateScale(100),
-    width: moderateScale(300),
-    marginBottom: verticalScale(15),
-  },
+ 
+  
+ 
+ 
+ 
   inputStyle: {
     backgroundColor: Colors.white,
     height: Platform.OS === 'ios' ? verticalScale(40) : verticalScale(45),
@@ -78,9 +52,12 @@ marginBottom:20,
   },
 
   skiptext: {
-    color: Colors.white,
+    color: Colors.black,
     textAlign: 'center',
   },
+ 
+
+ 
   root: {flex: 1, padding: 10,},
   title: {textAlign: 'center', fontSize: 30},
   codeFieldRoot: {marginTop: 20,marginLeft:10},
@@ -90,11 +67,11 @@ marginBottom:20,
     lineHeight:33,
     fontSize: 20,
     borderWidth: 2,
-    borderColor: '#fff',
+    borderColor: '#cccccc',
     textAlign: 'center',
     marginRight:10,
     borderRadius:20,
-    color:Colors.white,
+    color:Colors.black,
    
   },
   focusCell: {
@@ -107,7 +84,89 @@ marginBottom:20,
     marginLeft:20,
     alignSelf:'flex-end',
     
-  }
+  },
+  logincontainer:{
+    flex:1,
+    backgroundColor:"white",
+    position:'relative'
+  },
+  tophalfcontainer:{
+      // backgroundColor:'#3057B4',
+      backgroundColor:'#702963',
+      // height:'60%',
+      //  transform: [{ rotate: '90deg'}],
+      height:height/1.7,
+      width:'100%',
+      borderBottomLeftRadius:55,
+      borderBottomRightRadius:55
+     
+      // marginTop:-130,
+
+
+
+  },
+  loginheadertext:{
+      // position:'absolute',
+      // zIndex:999,
+      alignSelf:'center',
+      // top:'9%',
+      alignItems:'center',
+      marginTop:20
+     
+  },
+  logintext:{
+      color:'#702963',
+      fontSize:12,
+      marginTop:5
+      
+  },
+  logintextheader:{
+      color:'#702963',
+      fontSize:23,
+      fontWeight:'500'
+  },
+  loginbox: {
+      position: 'absolute',
+      zIndex: 999,
+      backgroundColor: 'white',
+      width: '90%',
+      height: '40%',
+      borderRadius:50,
+      alignSelf: 'center',
+      top: '46%',
+      ...Platform.select({
+        ios: {
+          shadowColor: 'black',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+        },
+        android: {
+          elevation: 4,
+        },
+      }),
+    },
+    innerloginbox:{
+      // backgroundColor:'red',
+      width:'90%',
+      alignSelf:'center',
+      margin:'10%',
+      marginTop:'7%'
+    },
+    labletext:{
+      fontSize:12,
+      color:'#702963'
+    },
+    backgroundImage: {
+      width: '100%',
+      height: '100%',
+      resizeMode: 'cover',
+      borderBottomLeftRadius:55,
+      borderBottomRightRadius:55
+    },
+   
+  
+   
 });
 
 export default styles;

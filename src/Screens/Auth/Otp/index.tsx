@@ -13,7 +13,8 @@ import {
   Platform,
   Pressable,
   Animated,
-  ImageBackground
+  ImageBackground,
+  Easing
 } from 'react-native';
 
 import { moderateScale, verticalScale, scale } from 'react-native-size-matters';
@@ -41,6 +42,11 @@ import styles, {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../Navigation/RootStackPrams';
 import AnimatedTouchable from '../../../Components/AnimatedTouchbale';
+// import  Animated,{
+//   useSharedValue,
+//   withSpring,
+//   useAnimatedStyle,
+// } from 'react-native-reanimated';
 
 
 const { Value, Text: AnimatedText } = Animated;
@@ -57,6 +63,13 @@ const Otp: React.FC<any> = (prop) => {
   const [loader, setLoader] = useState<boolean>(false);
   const [buttonLoader, setButtonLoader] = useState<boolean>(false);
   const [saveDeviceToken, setSaveDeviceToken] = useState<string | null>('11111');
+  // const animation = useSharedValue(0);
+  // const animatedStyles = useAnimatedStyle(() => {
+  //   return {transform: [{translateY: animation.value}]};
+  // });
+  // useEffect(() => {
+  //   animation.value = withSpring(100);
+  // }, [animation]);
 
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -222,80 +235,44 @@ const Otp: React.FC<any> = (prop) => {
   };
 
   return (
-    <ImageBackground  source={require('../../../Images/login-bg-4.jpg')} 
-    style={styles.container}>
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.containerdata}>
+    <View style={styles.logincontainer}>
+      <View style={styles.tophalfcontainer}>
+        <Image
+          source={require('../../../Images/autobackground.png')}
+          style={styles.backgroundImage}
+          
+        />
+      </View>
 
-          <View style={styles.logoStyle}>
-            <Image
-              style={styles.logoimageStyle}
-              resizeMode="contain"
-              source={purichakralogo}
-            />
-          </View>
-          <View style={{ ...styles.logoStyle, marginTop: -40 }}>
-            <Image
-              style={styles.logoimageStyle}
-              resizeMode="contain"
-              source={purilogo1}
-            />
-          </View>
-          <View
-            style={{
-              // backgroundColor: Colors.white,
-              width: Platform.OS === 'ios' ? '100%' : '90%',
-              borderRadius: 10,
-              padding: 10,
-              // borderColor: '#FDC91C',
-              // borderWidth: 2
-            }}>
-            <Text style={styles.loginWhithAcStyle}>{Strings.LOGIN}</Text>
-            <Text style={{ alignItems: 'center', textAlign: 'center',color:Colors.white }}>
-              Enter the verification code{'\n'} send to your{' '}
-              {prop.route.params.phone}<Text style={{ color: "#FDC91C"}} onPress={() => {
-                prop.navigation.navigate('Login', { item: prop.route.params.item });
-              }} > Change</Text>
-            </Text>
-
-            {/* <TextInput
-              value={loginSignUp}
-              placeholderTextColor={Colors.gray}
-              placeholder={Strings.MOBILE_MAIL_PLACEHOLDER}
-              style={styles.inputStyle}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              onChangeText={value => {
-                setLoginSignUp(value);
-              }}
-            /> */}
-            <View style={{ padding: 10, width: '90%', alignSelf: 'center', justifyContent: 'space-between' }}>
-
-
-              <CodeField
-                ref={ref}
-                {...props}
-                // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
-                value={value}
-                onChangeText={setValue}
-                cellCount={CELL_COUNT}
-                rootStyle={styles.codeFieldRoot}
-                keyboardType="number-pad"
-                textContentType="oneTimeCode"
-                renderCell={({ index, symbol, isFocused }) => (
-                  <Text
-                    key={index}
-                    style={[styles.cell, isFocused && styles.focusCell]}
-                    onLayout={getCellOnLayoutHandler(index)}>
-                    {symbol || (isFocused ? <Cursor /> : null)}
-                  </Text>
-                )}
-              />
-            </View>
-            <View style={styles.btnContainer}>
+      <View style={styles.loginbox}>
+        <View style={styles.loginheadertext}>
+          <Text style={styles.logintextheader}>Welcome to Prepaid Auto</Text>
+          <Text style={styles.logintext}>Please Login to continue</Text>
+        </View>
+        <View style={styles.innerloginbox}>
+          {/* <Text style={styles.labletext}>Enter MobileNumber</Text> */}
+          <View style={{ padding: 10, width: '90%', alignSelf: 'center', justifyContent: 'space-between' }}>
+          <CodeField
+            ref={ref}
+            {...props}
+            // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
+            value={value}
+            onChangeText={setValue}
+            cellCount={CELL_COUNT}
+            rootStyle={styles.codeFieldRoot}
+            keyboardType="number-pad"
+            textContentType="oneTimeCode"
+            renderCell={({ index, symbol, isFocused }) => (
+              <Text
+                key={index}
+                style={[styles.cell, isFocused && styles.focusCell]}
+                onLayout={getCellOnLayoutHandler(index)}>
+                {symbol || (isFocused ? <Cursor /> : null)}
+              </Text>
+            )}
+          />
+        </View>
+        <View style={styles.btnContainer}>
               <AnimatedTouchable
                 styles={{ marginTop: 10 }}
                 width={'95%'}
@@ -307,33 +284,136 @@ const Otp: React.FC<any> = (prop) => {
                   // setLoading(true)
                 }}
               />
-               
-              
-
-              {/* Your buttons or other UI elements */}
+             {/* Your buttons or other UI elements */}
             </View>
             <TouchableOpacity style={styles.resendotp} onPress={() => {
                 // otpgenerater();
               }}>
-                <Text style={{color:'#fff'}}>Resend OTP</Text>
+                <Text style={{color:'#000'}}>Resend OTP</Text>
               </TouchableOpacity>
-
-
-
             <Pressable style={styles.skipbutton}>
               <Text style={styles.skiptext}>
                 By proceeding, you agree to stayatpurijagannatha's
                 <Text style={{ color: '#FDC91C' }}> Privacy Policy and T&Cs</Text>{' '}
               </Text>
             </Pressable>
-
-
-          </View>
         </View>
-      </TouchableWithoutFeedback>
+       
+      </View>
 
-    </KeyboardAvoidingView>
-    </ImageBackground>
+    </View>
+    // <ImageBackground  source={require('../../../Images/login-bg-4.jpg')} 
+    // style={styles.container}>
+    // <KeyboardAvoidingView
+    //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    //   >
+    //   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    //     <View style={styles.containerdata}>
+
+    //       <View style={styles.logoStyle}>
+    //         <Image
+    //           style={styles.logoimageStyle}
+    //           resizeMode="contain"
+    //           source={purichakralogo}
+    //         />
+    //       </View>
+    //       <View style={{ ...styles.logoStyle, marginTop: -40 }}>
+    //         <Image
+    //           style={styles.logoimageStyle}
+    //           resizeMode="contain"
+    //           source={purilogo1}
+    //         />
+    //       </View>
+    //       <View
+    //         style={{
+    //           // backgroundColor: Colors.white,
+    //           width: Platform.OS === 'ios' ? '100%' : '90%',
+    //           borderRadius: 10,
+    //           padding: 10,
+    //           // borderColor: '#FDC91C',
+    //           // borderWidth: 2
+    //         }}>
+    //         <Text style={styles.loginWhithAcStyle}>{Strings.LOGIN}</Text>
+    //         <Text style={{ alignItems: 'center', textAlign: 'center',color:Colors.white }}>
+    //           Enter the verification code{'\n'} send to your{' '}
+    //           {prop.route.params.phone}<Text style={{ color: "#FDC91C"}} onPress={() => {
+    //             prop.navigation.navigate('Login', { item: prop.route.params.item });
+    //           }} > Change</Text>
+    //         </Text>
+
+    //         {/* <TextInput
+    //           value={loginSignUp}
+    //           placeholderTextColor={Colors.gray}
+    //           placeholder={Strings.MOBILE_MAIL_PLACEHOLDER}
+    //           style={styles.inputStyle}
+    //           keyboardType="email-address"
+    //           autoCapitalize="none"
+    //           onChangeText={value => {
+    //             setLoginSignUp(value);
+    //           }}
+    //         /> */}
+    //         <View style={{ padding: 10, width: '90%', alignSelf: 'center', justifyContent: 'space-between' }}>
+
+
+    //           <CodeField
+    //             ref={ref}
+    //             {...props}
+    //             // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
+    //             value={value}
+    //             onChangeText={setValue}
+    //             cellCount={CELL_COUNT}
+    //             rootStyle={styles.codeFieldRoot}
+    //             keyboardType="number-pad"
+    //             textContentType="oneTimeCode"
+    //             renderCell={({ index, symbol, isFocused }) => (
+    //               <Text
+    //                 key={index}
+    //                 style={[styles.cell, isFocused && styles.focusCell]}
+    //                 onLayout={getCellOnLayoutHandler(index)}>
+    //                 {symbol || (isFocused ? <Cursor /> : null)}
+    //               </Text>
+    //             )}
+    //           />
+    //         </View>
+    //         <View style={styles.btnContainer}>
+    //           <AnimatedTouchable
+    //             styles={{ marginTop: 10 }}
+    //             width={'95%'}
+    //             loader={prop.loader}
+    //             title={Strings.VERIFY_OTP}
+    //             onPress={() => {
+    //               otpVerification(value);
+
+    //               // setLoading(true)
+    //             }}
+    //           />
+               
+              
+
+    //           {/* Your buttons or other UI elements */}
+    //         </View>
+    //         <TouchableOpacity style={styles.resendotp} onPress={() => {
+    //             // otpgenerater();
+    //           }}>
+    //             <Text style={{color:'#fff'}}>Resend OTP</Text>
+    //           </TouchableOpacity>
+
+
+
+    //         <Pressable style={styles.skipbutton}>
+    //           <Text style={styles.skiptext}>
+    //             By proceeding, you agree to stayatpurijagannatha's
+    //             <Text style={{ color: '#FDC91C' }}> Privacy Policy and T&Cs</Text>{' '}
+    //           </Text>
+    //         </Pressable>
+
+
+    //       </View>
+    //     </View>
+    //   </TouchableWithoutFeedback>
+
+    // </KeyboardAvoidingView>
+    // </ImageBackground>
   );
 };
 
