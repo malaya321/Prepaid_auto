@@ -18,7 +18,7 @@ import Otp from '../../Screens/Auth/Otp';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-const App: React.FC = () => {
+const RootNavigation: React.FC = () => {
   const fallback = (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text style={{ color: Colors.black }}>Loading...</Text>
@@ -47,4 +47,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default RootNavigation;

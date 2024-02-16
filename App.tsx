@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import RootNavigation from './src/Navigation/RootNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message';
+ import Toast from 'react-native-toast-message';
+
 import { toastConfig } from './src/Components/CustumToast/CustumToastConfig';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';

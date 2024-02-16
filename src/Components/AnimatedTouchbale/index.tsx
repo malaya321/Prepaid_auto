@@ -73,9 +73,9 @@ const AnimatedTouchable: React.FC<AnimatedBtnProps> = ({
           justifyContent: 'center',
           alignItems: 'center',
           alignSelf: 'center',
-          backgroundColor:bgcolor|| '#FDC91C',
+          backgroundColor:bgcolor|| '#2FA044',
         borderWidth:2,
-      borderColor:'#FDC91C'},
+      borderColor:'#2FA044'},
           
           ]}>
       
