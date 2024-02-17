@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
         zIndex: 999,
         backgroundColor: 'white',
         width: '90%',
-        height: '40%',
+        // height: '40%',
         borderRadius:50,
         alignSelf: 'center',
         top: '35%',
@@ -85,7 +85,7 @@ export const styles = StyleSheet.create({
       },
       skipbutton: {
         //  backgroundColor:'black',
-        width:Platform.OS==='ios'?'90%': '100%',
+        width:Platform.OS==='ios'?'95%': '100%',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf:'center',
