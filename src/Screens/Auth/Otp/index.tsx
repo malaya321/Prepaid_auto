@@ -207,6 +207,7 @@ const Otp: React.FC<any> = (prop) => {
     otp_data.append('device_id', device_id);
     otp_data.append('device_token', saveDeviceToken || '');
     console.log(otp_data, 'otp_data')
+    navigation.navigate('Dashboard')
     // prop.otpVerify(otp_data, navigation, (success: any, error: any, data: any) => {
     //   if (error) {
     //     // console.log('Error While getting Hash in server');
