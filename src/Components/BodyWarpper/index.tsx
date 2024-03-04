@@ -12,17 +12,19 @@ export interface BodyWarperProps {
 const BodyWarpper: React.FC<BodyWarperProps> = ({ edges, children }) => {
   const insets = useSafeAreaInsets()
   return (
+
     <>
-      <View style={{flexDirection:'row',width:'100%',height:Math.max(insets.top)}}>
+        <SafeAreaView style={styles.container} edges={edges ?? ['top']}>
+      {/* <View style={{flexDirection:'row',width:'100%',height:Math.max(insets.top)}}>
       <View style={{backgroundColor: Colors.white,width:'60%',}}></View>
       <View style={{    backgroundColor: Colors.purple,width:'40%'}}></View>
-      </View>
+      </View> */}
 
       <StatusBar
         animated={true}
         backgroundColor={Colors.light_dark}
-        barStyle='dark-content'
-        translucent
+        barStyle='light-content'
+        // translucent
         // StatusBarAnimation='fade'
       />
       <View style={{ flex: 1, backgroundColor: Colors.white }}>
@@ -31,7 +33,9 @@ const BodyWarpper: React.FC<BodyWarperProps> = ({ edges, children }) => {
    
   
       </View>
+      </SafeAreaView>
     </>
+   
   );
 };
 
@@ -40,7 +44,7 @@ export default BodyWarpper;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.red,
+    backgroundColor: Colors.red,
 
   },
 });
