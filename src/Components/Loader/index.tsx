@@ -17,7 +17,8 @@ import Animated, {
   withRepeat,
 } from 'react-native-reanimated';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
-import {purichakralogo} from '../../Images';
+
+import {autoloader} from '../../Images';
 interface LoaderProps {
   loading: boolean;
 }
@@ -57,7 +58,7 @@ const Loader: React.FC<LoaderProps> = ({loading}) => {
                     /> */}
             {/* </Animated.View> */}
             <Image
-              source={purichakralogo}
+              source={autoloader}
               style={styles.logo}
               resizeMode="contain"
             />

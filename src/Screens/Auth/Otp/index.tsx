@@ -42,6 +42,8 @@ import styles, {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../Navigation/RootStackPrams';
 import AnimatedTouchable from '../../../Components/AnimatedTouchbale';
+import { CallApi } from '../../../CallApi';
+import Loader from '../../../Components/Loader';
 // import  Animated,{
 //   useSharedValue,
 //   withSpring,
@@ -54,13 +56,13 @@ const { Value, Text: AnimatedText } = Animated;
 const CELL_COUNT = 4;
 type OtpScreenProp = NativeStackNavigationProp<RootStackParamList, 'Otp'>;
 const Otp: React.FC<any> = (prop) => {
-  // const { phone, item } = prop.route.params;
-  // console.log(phone, 'props.route----->>');
+  const { phone, item } = prop.route.params;
+  console.log(phone, 'props.route----->>');
 
   const navigation = useNavigation<OtpScreenProp>();
   const [value, setValue] = useState<string>('');
   const [seconds, setSeconds] = useState<number>(30);
-  const [loader, setLoader] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [buttonLoader, setButtonLoader] = useState<boolean>(false);
   const [saveDeviceToken, setSaveDeviceToken] = useState<string | null>('11111');
   // const animation = useSharedValue(0);
@@ -78,37 +80,7 @@ const Otp: React.FC<any> = (prop) => {
   });
   const animationsColor = [...new Array(CELL_COUNT)].map(() => new Value(0));
   const animationsScale = [...new Array(CELL_COUNT)].map(() => new Value(1));
-  // const otpgenerater = () => {
-  //   let formdata = new FormData();
-  //   formdata.append('request_type', 'generate_otp');
-  //   formdata.append('request_from', 'web');
-  //   formdata.append('input_type', 'mobile');
-  //   formdata.append('input_data', prop.route.params.phone);
-  //   console.log('formdataofphone------>>>', formdata);
 
-  //   prop.loginAuth(
-  //     formdata,
-  //     navigation,
-  //     //  loginSignUp,
-  //     (success: any, error: any, data: any) => {
-  //       if (error) {
-  //         console.log('Error While getting Hash in server');
-  //       } else {
-  //         // navigation.navigate('Otp', {
-  //         //   phone: loginSignUp,
-  //         //   item: props.route.params.item,
-  //         // });
-
-  //         console.log(data, 'hashGenerationMethod');
-  //       }
-  //     },
-  //   );
-  // };
-
-  useEffect(() => {
-    //  otpgenerate()
-    // Add any additional initialization logic if needed
-  }, []);
 
 
   const otpHandler = (message: string) => {
@@ -192,51 +164,81 @@ const Otp: React.FC<any> = (prop) => {
       </AnimatedText>
     );
   };
-
   const otpVerification = async (otp: string) => {
-    // setLoader(true);
-    let device_id = await DeviceInfo.getUniqueId();
-    console.log(device_id, "llkkmmmm");
-    let device_mode = Platform.OS;
-    let otp_data = new FormData();
-    otp_data.append('request_type', 'verify_otp');
-    otp_data.append('input_type', 'mobile');
-    otp_data.append('input_data', prop.route.params.phone);
-    otp_data.append('otp', otp || value);
-    otp_data.append('device_type', device_mode);
-    otp_data.append('device_id', device_id);
-    otp_data.append('device_token', saveDeviceToken || '');
-    console.log(otp_data, 'otp_data')
-    navigation.navigate('Dashboard')
-    // prop.otpVerify(otp_data, navigation, (success: any, error: any, data: any) => {
-    //   if (error) {
-    //     // console.log('Error While getting Hash in server');
-    //   } else {
-    //     if (prop.route.params.item.pageName === 'DrawerContainer') {
-    //       prop.navigation.dispatch(
-    //         CommonActions.reset({
-    //           index: 1,
-    //           routes: [{ name: 'DrawerContainer' }],
-    //         }),
-    //       );
-    //     } else {
-    //       prop.navigation.navigate(prop.route.params.item.pageName, { item: prop.route.params.item });
-    //     }
-    //     // navigation.navigate('Otp',{phone:loginSignUp,
-    //     //   item: props.route.params.item,})
+    const requestData =JSON.stringify(
+     {
+      request_type: 'driver_login',
+      driver_mobile_number: phone,
+      login_otp: otp || value
 
-    //     // console.log(data, 'hashGenerationMethod');
+      // driver_mobile_number: '8018364674',
+    })
+    console.log(requestData,'responsedata--->>');
+    
+     setLoading(true);
 
-    //   }
-    // });
-
-    // ... rest of the code
-    // navigation.navigate('DrawerContainer')
-    // setLoader(false);
+    try {
+      const response = await CallApi('POST','manage_driver',requestData);
+      // console.log(response,'myresponse--->');
+      if (response.status === 1) {
+        await AsyncStorage.setItem('access_token', response.token);
+        navigation.navigate('Dashboard');
+      }else{
+        console.log('server error');
+        setLoading(false);
+      }
+      console.log(response, 'mydata-->>');
+    } catch (error) {
+       setLoading(false);
+      console.error('There was an error!', error);
+    }
   };
+
+  // const otpVerification = async (otp: string) => {
+  //   // setLoader(true);
+  //   let device_id = await DeviceInfo.getUniqueId();
+  //   console.log(device_id, "llkkmmmm");
+  //   let device_mode = Platform.OS;
+  //   let otp_data = new FormData();
+  //   otp_data.append('request_type', 'verify_otp');
+  //   otp_data.append('input_type', 'mobile');
+  //   otp_data.append('input_data', prop.route.params.phone);
+  //   otp_data.append('otp', otp || value);
+  //   otp_data.append('device_type', device_mode);
+  //   otp_data.append('device_id', device_id);
+  //   otp_data.append('device_token', saveDeviceToken || '');
+  //   console.log(otp_data, 'otp_data')
+  //   navigation.navigate('Dashboard')
+  //   // prop.otpVerify(otp_data, navigation, (success: any, error: any, data: any) => {
+  //   //   if (error) {
+  //   //     // console.log('Error While getting Hash in server');
+  //   //   } else {
+  //   //     if (prop.route.params.item.pageName === 'DrawerContainer') {
+  //   //       prop.navigation.dispatch(
+  //   //         CommonActions.reset({
+  //   //           index: 1,
+  //   //           routes: [{ name: 'DrawerContainer' }],
+  //   //         }),
+  //   //       );
+  //   //     } else {
+  //   //       prop.navigation.navigate(prop.route.params.item.pageName, { item: prop.route.params.item });
+  //   //     }
+  //   //     // navigation.navigate('Otp',{phone:loginSignUp,
+  //   //     //   item: props.route.params.item,})
+
+  //   //     // console.log(data, 'hashGenerationMethod');
+
+  //   //   }
+  //   // });
+
+  //   // ... rest of the code
+  //   // navigation.navigate('DrawerContainer')
+  //   // setLoader(false);
+  // };
 
   return (
     <View style={styles.logincontainer}>
+       <Loader loading={loading} />
       <View style={styles.tophalfcontainer}>
         <Image
           source={require('../../../Images/autobackground.png')}

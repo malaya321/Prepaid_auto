@@ -22,3 +22,4 @@ export const loadimage= require('../Images/loadimage.png');
 export const noimage= require('../Images/noimage.jpeg');
 export const hdfclogo= require('../Images/hdfclogo.png');
 export const suyoglogo= require('../Images/suyoglogo.png');
+export const autoloader= require('../Images/autoloader.png');

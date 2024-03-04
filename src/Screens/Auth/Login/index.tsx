@@ -13,7 +13,7 @@ import {
   Platform,
   Pressable,
   ImageBackground,
-  ActivityIndicator
+ 
 } from 'react-native';
 
 import {moderateScale, verticalScale, scale} from 'react-native-size-matters';
@@ -35,6 +35,7 @@ import {RootStackParamList} from '../../../Navigation/RootStackPrams';
 import {styles} from './StyleSheet';
 // import {API} from '../../../CallApi';
 import { CallApi } from '../../../CallApi';
+import Loader from '../../../Components/Loader';
 
 const {width, height} = Dimensions.get('screen');
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -73,9 +74,11 @@ const Login = (props: any) => {
           phone: loginSignUp,
           item: '',
         });
+      }else{
+        setLoading(false);
+        console.log('server error'); 
       }
-      setLoading(false);
-      console.log(response, 'mydata-->>');
+      
     } catch (error) {
       setLoading(false);
       console.error('There was an error!', error);
@@ -84,7 +87,7 @@ const Login = (props: any) => {
 
   return (
     <View style={styles.logincontainer}>
-     
+      <Loader loading={loading} />
       <View style={styles.tophalfcontainer}>
         <Image
           source={require('../../../Images/autobackground.png')}
