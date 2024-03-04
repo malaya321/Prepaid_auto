@@ -7,6 +7,7 @@ import {autoloader} from '../../../Images/index';
 import {CallApi} from '../../../CallApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../../../Components/Loader';
+import { useNavigation } from '@react-navigation/native';
 import {
   mobilenum,
   checkin,
@@ -16,13 +17,37 @@ import {
 } from '../../../Images/index';
 
 const Profile: React.FC = () => {
+  const navigation = useNavigation()
   const [profileData, setProfileData] = useState<any>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const handleLogout = () => {
-    // Implement your logout logic here
-    // For example, clearing user data, removing tokens, navigating to login screen, etc.
-    console.log('Logout pressed');
+  
+  const handleLogout = async () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: async () => {
+            try {
+             
+              await AsyncStorage.removeItem('token');
+              
+             
+              navigation.navigate('Login');
+            } catch (error) {
+              console.error('Error logging out:', error);
+            }
+          },
+        },
+      ]
+    );
   };
 
   const profiledata = async () => {
@@ -32,9 +57,7 @@ const Profile: React.FC = () => {
       token: value,
     });
     console.log(requestData, 'myresponsedata---');
-
     setLoading(true);
-
     try {
       const response = await CallApi('POST', 'manage_driver', requestData);
       console.log(response, 'myresponse--->');
@@ -60,7 +83,7 @@ const Profile: React.FC = () => {
   return (
     <BodyWarpper>
       {loading && <Loader loading={loading} />}
-      <BackHeader onPress={() => {}} title="Profile" />
+      <BackHeader onPress={() => {navigation.goBack()}} title="Profile" />
       <View style={styles.container}>
         <View style={styles.profileContainer}>
           <Image
