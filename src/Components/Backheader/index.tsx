@@ -3,7 +3,7 @@ import { View, Pressable, Text } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import Colors from '../../Constans/Colors';
 import Icons from '../Icons';
-import { TextComponent } from '../TextComponent';
+// import { TextComponent } from '../TextComponent';
 import CommonFonts from '../../Constans/CommonFonts';
 
 
