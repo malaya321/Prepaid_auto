@@ -13,6 +13,7 @@ import {
   Platform,
   Pressable,
   ImageBackground,
+  ActivityIndicator
 } from 'react-native';
 
 import {moderateScale, verticalScale, scale} from 'react-native-size-matters';
@@ -32,6 +33,8 @@ import {useNavigation, CommonActions} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../Navigation/RootStackPrams';
 import {styles} from './StyleSheet';
+// import {API} from '../../../CallApi';
+import { CallApi } from '../../../CallApi';
 
 const {width, height} = Dimensions.get('screen');
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -51,25 +54,41 @@ const Login = (props: any) => {
   useEffect(() => {
     animation.value = withSpring(100);
   }, [animation]);
-  const otpgenerate = () => {
-    let formdata = new FormData();
-    formdata.append('request_type', 'generate_otp');
-    formdata.append('request_from', 'web');
-    formdata.append('input_type', 'mobile');
-    formdata.append('input_data', loginSignUp);
-    console.log('formdata', formdata);
-    navigation.navigate('Otp', {
-      phone: loginSignUp,
-      item: '',
-    });
+ 
+  const otpgenerate = async () => {
+    const requestData =JSON.stringify(
+     {
+      request_type: 'send_driver_code',
+      driver_mobile_number: loginSignUp,
+
+      // driver_mobile_number: '8018364674',
+    })
+    setLoading(true);
+
+    try {
+      const response = await CallApi('POST','manage_driver',requestData);
+      // console.log(response,'myresponse--->');
+      if (response.status === 1) {
+        navigation.navigate('Otp', {
+          phone: loginSignUp,
+          item: '',
+        });
+      }
+      setLoading(false);
+      console.log(response, 'mydata-->>');
+    } catch (error) {
+      setLoading(false);
+      console.error('There was an error!', error);
+    }
   };
+
   return (
     <View style={styles.logincontainer}>
+     
       <View style={styles.tophalfcontainer}>
         <Image
           source={require('../../../Images/autobackground.png')}
           style={styles.backgroundImage}
-          
         />
       </View>
 
@@ -84,40 +103,41 @@ const Login = (props: any) => {
             placeholder="Enter Mobile Number"
             // onChangeText={handleChange}
             // value={username}
-            containerStyle={{marginTop: 10, height: 50, width: '100%',textAlign: 'center'}}
+            onChangeText={number => setLoginSignUp(number)}
+            containerStyle={{
+              marginTop: 10,
+              height: 50,
+              width: '100%',
+              textAlign: 'center',
+            }}
             placeholderTextColor="#702963"
           />
-           <View style={styles.btnContainer}>
-              <AnimatedTouchable
-                 styles={{ marginTop:10 }}
-                width={'100%'}
-                // loader={prop.loader}
-                title={Strings.SEND_OTP}
-                onPress={() => {
-                  navigation.navigate('Otp', {
-                    phone: loginSignUp,
-                    item: '',
-                  });
-                  // otpVerification(value);
+          <View style={styles.btnContainer}>
+            <AnimatedTouchable
+              styles={{marginTop: 10}}
+              width={'100%'}
+              //  loader={prop.loader}
+              title={Strings.SEND_OTP}
+              onPress={() => {
+                otpgenerate();
 
-                  // setLoading(true)
-                }}
-              />
-               
-              
-
-              {/* Your buttons or other UI elements */}
-            </View>
-            <Pressable style={styles.skipbutton}>
-              <Text style={styles.skiptext}>
-                By proceeding, you agree to stayatpurijagannatha's
-                <Text style={{ color: '#FDC91C' }}> Privacy Policy and T&Cs</Text>{' '}
-              </Text>
-            </Pressable>
+               setLoading(true)
+              }}
+            />
+             
+            {/* Your buttons or other UI elements */}
+          </View>
+          <Pressable style={styles.skipbutton}>
+            <Text style={styles.skiptext}>
+              By proceeding, you agree to stayatpurijagannatha's
+              <Text style={{color: '#FDC91C'}}>
+                {' '}
+                Privacy Policy and T&Cs
+              </Text>{' '}
+            </Text>
+          </Pressable>
         </View>
-       
       </Animated.View>
-
     </View>
   );
 };
