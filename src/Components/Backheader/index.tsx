@@ -19,9 +19,9 @@ const BackHeader: React.FC<BackHeaderProps> = ({ onPress,title }) => {
     paddingHorizontal:10}} onPress={onPress}>
         <Icons
           type="AntDesign"
-          name="left"
-          color={Colors.Primary}
-          size={18}
+          name="arrowleft"
+          color={Colors.black}
+          size={20}
         />  
       </Pressable>
 
