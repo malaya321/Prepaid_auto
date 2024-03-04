@@ -7,5 +7,6 @@ export type RootStackParamList = {
     phone: any;
     item:any ;
   };
-  SplashScreen:undefined
+  SplashScreen:undefined;
+  Profile:undefined
 };

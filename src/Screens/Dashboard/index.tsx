@@ -5,9 +5,13 @@ import BodyWarpper from '../../Components/BodyWarpper';
 import {styles} from './StyleSheet';
 import Colors from '../../Constans/Colors';
 import Icons from '../../Components/Icons';
-
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../Navigation/RootStackPrams';
+type DashboardScreenProp = NativeStackNavigationProp<RootStackParamList, 'Dashboard'>;
 const Dashboard = () => {
   const [filtervalue , setFiltervalue] = useState('Today')
+  const navigation=useNavigation<DashboardScreenProp>()
   return (
     <BodyWarpper>
       <View style={{ width: '100%',}}>
@@ -18,17 +22,17 @@ const Dashboard = () => {
       <View style={{    backgroundColor: Colors.purple,width:'40%'}}></View> */}
 
         <View style={styles.headerWrapper}>
-          <View style={{width:'15%',}}>
+          <Pressable style={{width:'15%',}} onPress={()=>navigation.navigate('Profile')}>
             <Image
               style={styles.profileImage}
               source={{
                 uri: 'https://plus.unsplash.com/premium_photo-1675034393381-7e246fc40755?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D',
               }}
             />
-          </View>
-          <View style={{width:'43%',marginLeft:'2%'}}>
+          </Pressable>
+          <Pressable style={{width:'43%',marginLeft:'2%'}}onPress={()=>navigation.navigate('Profile')}>
           <Text>Lingaraj Sahoo</Text>
-          </View>
+          </Pressable>
           <Pressable style={{width:'25%',backgroundColor:'orange', height:40,justifyContent:'center',alignItems:'center',borderRadius:5}}>
           <Text>Filter</Text>
           </Pressable>

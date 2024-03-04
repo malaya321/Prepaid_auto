@@ -8,12 +8,12 @@ const SplashScreen = (props:any) => {
     },[])
     const getData = async () => {
         try {
-          const value = await AsyncStorage.getItem('@user_id');
+          const value = await AsyncStorage.getItem('access_token');
           console.log(value, 'bapi');
           if (value == null) {
             props.navigation.replace('Login');
           } else {
-            props.navigation.replace('Login');
+            props.navigation.replace('Dashboard');
           }
         } catch (e) {
           // error reading value

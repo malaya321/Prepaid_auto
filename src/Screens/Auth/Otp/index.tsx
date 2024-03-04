@@ -183,6 +183,7 @@ const Otp: React.FC<any> = (prop) => {
       if (response.status === 1) {
         await AsyncStorage.setItem('access_token', response.token);
         navigation.navigate('Dashboard');
+        setLoading(false);
       }else{
         console.log('server error');
         setLoading(false);
@@ -238,7 +239,7 @@ const Otp: React.FC<any> = (prop) => {
 
   return (
     <View style={styles.logincontainer}>
-       <Loader loading={loading} />
+      {loading&& <Loader loading={loading} />}
       <View style={styles.tophalfcontainer}>
         <Image
           source={require('../../../Images/autobackground.png')}

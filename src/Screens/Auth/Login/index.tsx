@@ -74,6 +74,7 @@ const Login = (props: any) => {
           phone: loginSignUp,
           item: '',
         });
+        setLoading(false);
       }else{
         setLoading(false);
         console.log('server error'); 
@@ -87,7 +88,7 @@ const Login = (props: any) => {
 
   return (
     <View style={styles.logincontainer}>
-      <Loader loading={loading} />
+       {loading&& <Loader loading={loading} />}
       <View style={styles.tophalfcontainer}>
         <Image
           source={require('../../../Images/autobackground.png')}

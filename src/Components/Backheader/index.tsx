@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable } from 'react-native';
+import { View, Pressable, Text } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import Colors from '../../Constans/Colors';
 import Icons from '../Icons';
@@ -27,7 +27,7 @@ const BackHeader: React.FC<BackHeaderProps> = ({ onPress,title }) => {
 
       <View style={{ width: '85%', padding: verticalScale(10),
     paddingLeft:0 }}>
-        <TextComponent style={{fontFamily:CommonFonts.buttonTextFont}}>{title}</TextComponent>
+        <Text style={{fontFamily:CommonFonts.buttonTextFont}}>{title}</Text>
       </View> 
     </View>
   );

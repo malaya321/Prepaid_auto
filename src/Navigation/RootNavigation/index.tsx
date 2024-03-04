@@ -15,6 +15,7 @@ import SplashScreen from '../../Screens/SplashScreen';
 import Dashboard from '../../Screens/Dashboard';
 import Login from '../../Screens/Auth/Login';
 import Otp from '../../Screens/Auth/Otp';
+import Profile from '../../Screens/Auth/Profile';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -42,6 +43,7 @@ const RootNavigation: React.FC = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Otp" component={Otp} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
