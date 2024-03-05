@@ -73,6 +73,7 @@ const Loader: React.FC<LoaderProps> = ({loading}) => {
               numberOfDots={3}
               minOpacity={0.4}
               animationDelay={200}
+              // useNativeDriver={true}
               style={{
                 color: 'red',
                 fontSize: 150,
