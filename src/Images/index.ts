@@ -23,3 +23,11 @@ export const noimage= require('../Images/noimage.jpeg');
 export const hdfclogo= require('../Images/hdfclogo.png');
 export const suyoglogo= require('../Images/suyoglogo.png');
 export const autoloader= require('../Images/autoloader.png');
+export const mobilenum= require('../Images/mobilenum.png');
+export const checkin= require('../Images/checkin.png');
+export const checkout= require('../Images/checkout.png');
+export const address = require('../Images/location.png');
+export const licence= require('../Images/licence.png');
+
+
+
