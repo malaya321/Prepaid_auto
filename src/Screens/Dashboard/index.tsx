@@ -1,4 +1,4 @@
-import {View, Text, FlatList, Linking, Pressable, Image, Alert, Modal, ScrollView,Platform} from 'react-native';
+import {View, Text, FlatList, Linking, Pressable, Image, Alert, Modal, ScrollView,Platform,Dimensions} from 'react-native';
 import React, {useEffect, useState, useSyncExternalStore} from 'react';
 import {orderlist} from '../../Constans/Constant';
 import BodyWarpper from '../../Components/BodyWarpper';
@@ -19,6 +19,7 @@ type DashboardScreenProp = NativeStackNavigationProp<
   RootStackParamList,
   'Dashboard'
 >;
+const { height, width } = Dimensions.get('screen');
 const Dashboard = () => {
   const [filtervalue, setFiltervalue] = useState('Today');
   const [loading, setLoading] = useState(false);
@@ -347,6 +348,18 @@ setDatePickerModal(true)
         data={orderData}
         keyExtractor={(item, index) => 'key' + index}
         contentContainerStyle={{paddingBottom: 40}}
+        ListEmptyComponent={() => (
+          <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: height / 1.4
+          }}>
+            <Text style={{fontSize: 18,}}>
+              No Results Found
+            </Text>
+          </View>
+        )}
         renderItem={({item, index}) => {
           return (
             <View style={styles.flatlistcontainer}>
