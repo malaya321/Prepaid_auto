@@ -26,12 +26,15 @@ const Dashboard = () => {
   const [filtershow, setFiltershow] = useState(false);
   const [orderData, setOrderData] = useState(false);
   const [otpmodal, setOtpmodal] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [datePickerModal, setDatePickerModal] = useState(false);
   const [otpValue, setOtpValue] = useState('');
   const [itemData, setItemData] = useState<any>();
+  const [profileData, setProfileData] = useState<any>('');
   const navigation = useNavigation<DashboardScreenProp>();
   useEffect(() => {
     getData();
+    profiledata()
   }, []);
   const getData = async () => {
     const value = await AsyncStorage.getItem('access_token');
@@ -45,19 +48,22 @@ const Dashboard = () => {
       // driver_mobile_number: '8018364674',
     });
     setLoading(true);
-    console.log(requestData);
+    // console.log(requestData);
     try {
       const response = await CallApi('POST', 'manage_driver', requestData);
-      console.log(response, 'myresponse--->');
+      // console.log(response, 'myresponse--->');
       if (response.success === 1) {
+        setRefreshing(false)
         setOrderData(response.data);
         setLoading(false);
       } else {
         setLoading(false);
+        setRefreshing(false)
         console.log('server error');
       }
     } catch (error) {
       setLoading(false);
+      setRefreshing(false)
       SweetAlert({
         type: alerttype.error,
         heading: 'Warning',
@@ -66,6 +72,32 @@ const Dashboard = () => {
       console.error('There was an error!', error);
     }
   };
+  const profiledata = async () => {
+    const value = await AsyncStorage.getItem('access_token');
+    const requestData = JSON.stringify({
+      request_type: 'get_driver_details',
+      token: value,
+    });
+    console.log(requestData, 'myresponsedata---');
+    setLoading(true);
+    try {
+      const response = await CallApi('POST', 'manage_driver', requestData);
+      console.log(response, 'myresponse--->');
+      if (response.success === 1) {
+        setLoading(false);
+        setProfileData(response.data);
+      } else if (response.status === 0) {
+        Alert.alert('App is logging on another device');
+        setLoading(false);
+      } else {
+        setLoading(false);
+        console.log('server error');
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error('There was an error!', error);
+    }
+  }
   const Starttrip=async()=>{
     const value = await AsyncStorage.getItem('access_token');
     const requestData = JSON.stringify({
@@ -87,11 +119,23 @@ const Dashboard = () => {
         setLoading(false);
       } else {
         setLoading(false);
-        SweetAlert({
-          type: alerttype.warning,
-          heading: 'Warning',
-          body:response.message,
-        });
+        if(response.booking_status=== 0){
+          setOtpmodal(false)
+          getData()
+          SweetAlert({
+            type: alerttype.warning,
+            heading: 'Warning',
+            body:response.message,
+          });
+        }else{
+          SweetAlert({
+            type: alerttype.warning,
+            heading: 'Warning',
+            body:response.message,
+          });
+        }
+        
+     
         console.log('server error');
       }
     } catch (error) {
@@ -121,15 +165,30 @@ const Dashboard = () => {
       if (response.success === 1) {
         setOtpmodal(false)
         getData()
+        // SweetAlert({
+        //   type: alerttype.success,
+        //   heading: 'Warning',
+        //   body:response.message,
+        // });
         // setOrderData(response.data);
         setLoading(false);
-      } else {
-        setLoading(false);
-        SweetAlert({
-          type: alerttype.warning,
-          heading: 'Warning',
-          body:response.message,
-        });
+      } else {      
+        // getData()
+        if(response.booking_status=== 0){
+          setOtpmodal(false)
+          getData()
+          SweetAlert({
+            type: alerttype.warning,
+            heading: 'Warning',
+            body:response.message,
+          });
+        }else{
+          SweetAlert({
+            type: alerttype.warning,
+            heading: 'Warning',
+            body:response.message,
+          });
+        }
         console.log('server error');
       }
     } catch (error) {
@@ -200,6 +259,11 @@ const Dashboard = () => {
 setDatePickerModal(true)
   }
   }
+ const _handleRefresh = () => {
+  setRefreshing(true)
+  setFiltervalue('Today')
+  getData()
+  };
   return (
     <BodyWarpper>
       {loading && <Loader loading={loading} />}
@@ -232,14 +296,14 @@ setDatePickerModal(true)
               <Image
                 style={styles.profileImage}
                 source={{
-                  uri: 'https://plus.unsplash.com/premium_photo-1675034393381-7e246fc40755?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D',
+                  uri: profileData?profileData.driver_image:'https://plus.unsplash.com/premium_photo-1675034393381-7e246fc40755?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D',
                 }}
               />
             </Pressable>
             <Pressable
               style={{width: '43%', marginLeft: '2%'}}
               onPress={() => navigation.navigate('Profile')}>
-              <Text>Lingaraj Sahoo</Text>
+              <Text>{profileData?.driver_name}</Text>
             </Pressable>
             <Pressable
               style={{
@@ -343,6 +407,7 @@ setDatePickerModal(true)
             </Pressable>
           </View>
         )}
+        <View style={{borderWidth:0.5,borderColor:"rgba(0,0,0,.3)",marginTop:3}}/>
       </View>
       <FlatList
         data={orderData}
@@ -360,6 +425,9 @@ setDatePickerModal(true)
             </Text>
           </View>
         )}
+        refreshing={refreshing}
+       onRefresh={_handleRefresh}
+
         renderItem={({item, index}) => {
           return (
             <View style={styles.flatlistcontainer}>

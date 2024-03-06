@@ -15,9 +15,15 @@ import {
   address,
   licence,
 } from '../../../Images/index';
+import { RootStackParamList } from '../../../Navigation/RootStackPrams';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+type ProfileScreenProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Profile'
+>;
 const Profile: React.FC = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<ProfileScreenProp>()
   const [profileData, setProfileData] = useState<any>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

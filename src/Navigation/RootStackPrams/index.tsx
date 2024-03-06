@@ -1,8 +1,6 @@
 export type RootStackParamList = {
   Dashboard: undefined;
-  Login: {
-    item:any
-  };
+  Login:undefined
   Otp: {
     phone: any;
     item:any ;
