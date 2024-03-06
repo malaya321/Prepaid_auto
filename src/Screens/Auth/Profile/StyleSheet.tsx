@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        // paddingHorizontal: 20,
+        //  paddingHorizontal: 20,
         paddingTop: 40,
       },
       profileContainer: {
@@ -26,23 +26,27 @@ export const styles = StyleSheet.create({
       },
       infoContainer: {
         // backgroundColor: '#f2f2f2',
-        padding: 20,
+        // padding: 50,
         borderRadius: 10,
+        width:'95%',
+        alignSelf:'center',
+        marginBottom:20,
+       
       
        
       },
       infoText: {
         fontSize: 16,
         fontWeight:'600',
-        marginLeft:20
+        paddingLeft:20
         
       },
       textcontainer:{
         backgroundColor:'#F6F8F7',
-        marginBottom: 10,
-        padding:10,
+        marginBottom: 20,
+        padding:20,
         borderRadius:10,
-        width:'100%',
+        // width:'100%',
         elevation:2,
         flexDirection:'row',
        alignItems:'center'
@@ -56,9 +60,10 @@ export const styles = StyleSheet.create({
         backgroundColor: '#FF3131',
         padding: 11,
         borderRadius: 3,
-        width:"92%",
+        width:"95%",
         alignSelf:'center',
         elevation:2,
+        marginTop:20
       },
       logoutButtonText: {
         color: '#fff',
