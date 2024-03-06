@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import BodyWarpper from '../../Components/BodyWarpper';
 import Loader from '../../Components/Loader';
 import BackHeader from '../../Components/Backheader';
+import { styles } from './StyleSheet';
+
 
 type OrderDetailsScreenProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -19,7 +21,10 @@ const OrderDetails = () => {
     <BodyWarpper>
            {loading && <Loader loading={loading} />}
       <BackHeader onPress={() => {navigation.goBack()}} title="Orders" />
-      <Text>OrderDetails</Text>
+      <View>
+         <Text>hii</Text>
+      </View>
+      
     </BodyWarpper>
   )
 }
