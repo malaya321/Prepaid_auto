@@ -16,6 +16,8 @@ import Dashboard from '../../Screens/Dashboard';
 import Login from '../../Screens/Auth/Login';
 import Otp from '../../Screens/Auth/Otp';
 import Profile from '../../Screens/Auth/Profile';
+import OrderDetails from '../../Screens/OrderDetails';
+import Notification from '../../Screens/Notification';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -43,7 +45,9 @@ const RootNavigation: React.FC = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Otp" component={Otp} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="OrderDetails" component={OrderDetails} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Notification" component={Notification} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -430,7 +430,9 @@ setDatePickerModal(true)
 
         renderItem={({item, index}) => {
           return (
-            <View style={styles.flatlistcontainer}>
+            <Pressable style={styles.flatlistcontainer} onPress={()=>{
+              navigation.navigate('OrderDetails')
+            }}>
               <View style={styles.textcontainerforlocaton}>
                 {/* <Text style={styles.nametext} >Booking Id:</Text> */}
                 <Text style={styles.valuetextbookingid}>{item.booking_id}</Text>
@@ -534,7 +536,7 @@ setDatePickerModal(true)
                   </Pressable>
                 ) : item.start_flag === 0 && item.end_flag === 0 ? null : null}
               </View>
-            </View>
+            </Pressable>
           );
         }}
       />

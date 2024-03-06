@@ -49,7 +49,8 @@ export const styles = StyleSheet.create({
         // width:'100%',
         elevation:2,
         flexDirection:'row',
-       alignItems:'center'
+       alignItems:'center',
+       overflow:'hidden'
       },
       textinfopngs:{
         height:30,
@@ -63,7 +64,7 @@ export const styles = StyleSheet.create({
         width:"95%",
         alignSelf:'center',
         elevation:2,
-        marginTop:20
+        // marginTop:20
       },
       logoutButtonText: {
         color: '#fff',
