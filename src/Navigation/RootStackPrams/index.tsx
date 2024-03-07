@@ -7,6 +7,8 @@ export type RootStackParamList = {
   };
   SplashScreen:undefined;
   Profile:undefined;
-  OrderDetails:undefined;
+  OrderDetails:{
+    item:any;
+  }
   Notification:undefined;
 };

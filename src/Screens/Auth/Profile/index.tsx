@@ -43,10 +43,10 @@ const Profile: React.FC = () => {
           onPress: async () => {
             try {
              
-              await AsyncStorage.removeItem('token');
+              await AsyncStorage.removeItem('access_token');
               
              
-              navigation.navigate('Login');
+              navigation.replace('Login');
             } catch (error) {
               console.error('Error logging out:', error);
             }
@@ -67,11 +67,14 @@ const Profile: React.FC = () => {
     try {
       const response = await CallApi('POST', 'manage_driver', requestData);
       console.log(response, 'myresponse--->');
-      if (response.success === 1) {
+      if(response.block_status=== 1){
+        logoutfun(response.message)
+        setLoading(false);
+      }else if (response.success === 1) {
         setLoading(false);
         setProfileData(response.data);
       } else if (response.status === 0) {
-        Alert.alert('App is logging on another device');
+        logoutfun(response.message)
         setLoading(false);
       } else {
         setLoading(false);
@@ -85,7 +88,26 @@ const Profile: React.FC = () => {
   useEffect(() => {
     profiledata();
   }, []);
-
+  const logoutfun =(message:any)=>{
+    Alert.alert(
+      '',
+      message,
+              [
+              
+                {
+                  text: 'OK',
+                  onPress: async () => {
+                    try {
+                      await AsyncStorage.removeItem('access_token');
+                      navigation.replace('Login');
+                    } catch (error) {
+                      console.error('Error logging out:', error);
+                    }
+                  },
+                },
+              ]
+            );
+  }
   return (
     <BodyWarpper>
       {loading && <Loader loading={loading} />}

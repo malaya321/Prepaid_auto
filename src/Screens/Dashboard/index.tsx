@@ -37,6 +37,7 @@ const Dashboard = () => {
     profiledata()
   }, []);
   const getData = async () => {
+    setFiltervalue('Today')
     const value = await AsyncStorage.getItem('access_token');
     const requestData = JSON.stringify({
       request_type: 'customer_booking_lists',
@@ -52,7 +53,10 @@ const Dashboard = () => {
     try {
       const response = await CallApi('POST', 'manage_driver', requestData);
       // console.log(response, 'myresponse--->');
-      if (response.success === 1) {
+      if(response.block_status=== 1){
+        logoutfun(response.message)
+        setLoading(false);
+      }else if (response.success === 1) {
         setRefreshing(false)
         setOrderData(response.data);
         setLoading(false);
@@ -72,6 +76,26 @@ const Dashboard = () => {
       console.error('There was an error!', error);
     }
   };
+  const logoutfun =(message:any)=>{
+    Alert.alert(
+      '',
+      message,
+              [
+              
+                {
+                  text: 'OK',
+                  onPress: async () => {
+                    try {
+                      await AsyncStorage.removeItem('access_token');
+                      navigation.replace('Login');
+                    } catch (error) {
+                      console.error('Error logging out:', error);
+                    }
+                  },
+                },
+              ]
+            );
+  }
   const profiledata = async () => {
     const value = await AsyncStorage.getItem('access_token');
     const requestData = JSON.stringify({
@@ -83,15 +107,16 @@ const Dashboard = () => {
     try {
       const response = await CallApi('POST', 'manage_driver', requestData);
       console.log(response, 'myresponse--->');
-      if (response.success === 1) {
+      if(response.block_status=== 1){
+        logoutfun(response.message)
+        setLoading(false);
+      }else if (response.success === 1) {
         setLoading(false);
         setProfileData(response.data);
-      } else if (response.status === 0) {
-        Alert.alert('App is logging on another device');
+      } else{
+        logoutfun(response.message)
+        // Alert.alert('App is logging on another device');
         setLoading(false);
-      } else {
-        setLoading(false);
-        console.log('server error');
       }
     } catch (error) {
       setLoading(false);
@@ -112,16 +137,19 @@ const Dashboard = () => {
     try {
       const response = await CallApi('POST', 'manage_driver', requestData);
       console.log(response, 'myresponse--->');
-      if (response.success === 1) {
+      if(response.block_status=== 1){
+        logoutfun(response.message)
+        setLoading(false);
+      }else if (response.success === 1) {
         setOtpmodal(false)
-        getData()
+        Setfiltertype(filtervalue)
         // setOrderData(response.data);
         setLoading(false);
       } else {
         setLoading(false);
         if(response.booking_status=== 0){
           setOtpmodal(false)
-          getData()
+          Setfiltertype(filtervalue)
           SweetAlert({
             type: alerttype.warning,
             heading: 'Warning',
@@ -161,10 +189,13 @@ const Dashboard = () => {
     console.log(requestData);
     try {
       const response = await CallApi('POST', 'manage_driver', requestData);
-      console.log(response, 'myresponse--->');
-      if (response.success === 1) {
+      // console.log(response, 'myresponse--->');
+      if(response.block_status=== 1){
+        logoutfun(response.message)
+        setLoading(false);
+      }else if (response.success === 1) {
         setOtpmodal(false)
-        getData()
+        Setfiltertype(filtervalue)
         // SweetAlert({
         //   type: alerttype.success,
         //   heading: 'Warning',
@@ -174,9 +205,10 @@ const Dashboard = () => {
         setLoading(false);
       } else {      
         // getData()
+        setLoading(false);
         if(response.booking_status=== 0){
           setOtpmodal(false)
-          getData()
+          Setfiltertype(filtervalue)
           SweetAlert({
             type: alerttype.warning,
             heading: 'Warning',
@@ -218,7 +250,10 @@ const Dashboard = () => {
     try {
       const response = await CallApi('POST', 'manage_driver', requestData);
       console.log(response, 'myresponse--->');
-      if (response.success === 1) {
+      if(response.block_status=== 1){
+        logoutfun(response.message)
+        setLoading(false);
+      }else if (response.success === 1) {
         setOrderData(response.data);
         setLoading(false);
       } else {
@@ -431,7 +466,11 @@ setDatePickerModal(true)
         renderItem={({item, index}) => {
           return (
             <Pressable style={styles.flatlistcontainer} onPress={()=>{
-              navigation.navigate('OrderDetails')
+              navigation.navigate('OrderDetails', {
+                item: item.booking_id,
+              
+              });
+              
             }}>
               <View style={styles.textcontainerforlocaton}>
                 {/* <Text style={styles.nametext} >Booking Id:</Text> */}

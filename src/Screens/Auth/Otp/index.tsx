@@ -14,7 +14,8 @@ import {
   Pressable,
   Animated,
   ImageBackground,
-  Easing
+  Easing,
+  Alert
 } from 'react-native';
 
 import { moderateScale, verticalScale, scale } from 'react-native-size-matters';
@@ -44,6 +45,7 @@ import { RootStackParamList } from '../../../Navigation/RootStackPrams';
 import AnimatedTouchable from '../../../Components/AnimatedTouchbale';
 import { CallApi } from '../../../CallApi';
 import Loader from '../../../Components/Loader';
+import { SweetAlert, alerttype } from '../../../Components/CustumToast/SweetAlert';
 // import  Animated,{
 //   useSharedValue,
 //   withSpring,
@@ -164,6 +166,26 @@ const Otp: React.FC<any> = (prop) => {
       </AnimatedText>
     );
   };
+  const logoutfun =(message:any)=>{
+    Alert.alert(
+      '',
+      message,
+              [
+              
+                {
+                  text: 'OK',
+                  onPress: async () => {
+                    try {
+                      await AsyncStorage.removeItem('access_token');
+                      navigation.replace('Login');
+                    } catch (error) {
+                      console.error('Error logging out:', error);
+                    }
+                  },
+                },
+              ]
+            );
+  }
   const otpVerification = async (otp: string) => {
     const requestData =JSON.stringify(
      {
@@ -180,11 +202,19 @@ const Otp: React.FC<any> = (prop) => {
     try {
       const response = await CallApi('POST','manage_driver',requestData);
       // console.log(response,'myresponse--->');
-      if (response.status === 1) {
+      if(response.block_status=== 1){
+        logoutfun(response.message)
+        setLoading(false);
+      }else if (response.status === 1) {
         await AsyncStorage.setItem('access_token', response.token);
-        navigation.navigate('Dashboard');
+        navigation.replace('Dashboard');
         setLoading(false);
       }else{
+        SweetAlert({
+          type: alerttype.warning,
+          heading: 'Warning',
+          body:response.message
+        });
         console.log('server error');
         setLoading(false);
       }

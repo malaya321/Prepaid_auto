@@ -13,6 +13,7 @@ import {
   Platform,
   Pressable,
   ImageBackground,
+  Alert,
  
 } from 'react-native';
 
@@ -36,6 +37,8 @@ import {styles} from './StyleSheet';
 // import {API} from '../../../CallApi';
 import { CallApi } from '../../../CallApi';
 import Loader from '../../../Components/Loader';
+import { SweetAlert, alerttype } from '../../../Components/CustumToast/SweetAlert';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {width, height} = Dimensions.get('screen');
 type LoginScreenProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -55,7 +58,26 @@ const Login = (props: any) => {
   useEffect(() => {
     animation.value = withSpring(100);
   }, [animation]);
- 
+  const logoutfun =(message:any)=>{
+    Alert.alert(
+      '',
+      message,
+              [
+              
+                {
+                  text: 'OK',
+                  onPress: async () => {
+                    try {
+                      await AsyncStorage.removeItem('access_token');
+                      // navigation.replace('Login');
+                    } catch (error) {
+                      console.error('Error logging out:', error);
+                    }
+                  },
+                },
+              ]
+            );
+  }
   const otpgenerate = async () => {
     const requestData =JSON.stringify(
      {
@@ -69,13 +91,21 @@ const Login = (props: any) => {
     try {
       const response = await CallApi('POST','manage_driver',requestData);
       // console.log(response,'myresponse--->');
-      if (response.status === 1) {
+      if(response.block_status=== 1){
+        setLoading(false);
+        logoutfun(response.message)
+      }else if (response.status === 1) {
         navigation.navigate('Otp', {
           phone: loginSignUp,
           item: '',
         });
         setLoading(false);
       }else{
+        SweetAlert({
+          type: alerttype.warning,
+          heading: 'Warning',
+          body:response.message
+        });
         setLoading(false);
         console.log('server error'); 
       }
