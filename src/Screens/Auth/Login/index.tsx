@@ -163,7 +163,7 @@ const Login = (props: any) => {
           </View>
           <Pressable style={styles.skipbutton}>
             <Text style={styles.skiptext}>
-              By proceeding, you agree to stayatpurijagannatha's
+              By proceeding, you agree to Prepaid auto
               <Text style={{color: '#FDC91C'}}>
                 {' '}
                 Privacy Policy and T&Cs

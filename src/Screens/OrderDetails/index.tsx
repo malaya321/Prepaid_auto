@@ -40,7 +40,7 @@ const OrderDetails = (prop:any) => {
             setLoading(false);
             setOrderData(response.data);
           } else if (response.status === 0) {
-            Alert.alert('App is logging on another device');
+            // Alert.alert('App is logging on another device');
             setLoading(false);
           } else {
             setLoading(false);
