@@ -97,6 +97,7 @@ const Dashboard = () => {
             );
   }
   const profiledata = async () => {
+    // setProfileData('')
     const value = await AsyncStorage.getItem('access_token');
     const requestData = JSON.stringify({
       request_type: 'get_driver_details',
@@ -405,7 +406,7 @@ setDatePickerModal(true)
                   color:
                     filtervalue === 'Last weak' ? Colors.white : Colors.black,
                 }}>
-                Last weak
+                Last Week
               </Text>
             </Pressable>
             <Pressable
@@ -604,7 +605,7 @@ setDatePickerModal(true)
                           color: Colors.black,
                           // fontFamily: CommonFonts.normalHeading,
                         }}
-                        titleText="Select Check In - Check Out date"
+                        titleText="Select Start date - End date"
                         titleStyle={{
                           // fontFamily: CommonFonts.buttonTextFont,
                           fontSize: 11,

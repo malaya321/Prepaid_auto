@@ -95,7 +95,7 @@ const Login = (props: any) => {
         setLoading(false);
         logoutfun(response.message)
       }else if (response.status === 1) {
-        navigation.navigate('Otp', {
+        navigation.replace('Otp', {
           phone: loginSignUp,
           item: '',
         });

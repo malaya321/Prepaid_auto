@@ -1,4 +1,4 @@
-import {View, Text, Image, Alert, Pressable} from 'react-native';
+import {View, Text, Image, Alert, Pressable,ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import BodyWarpper from '../../../Components/BodyWarpper';
 import BackHeader from '../../../Components/Backheader';
@@ -17,6 +17,7 @@ import {
 } from '../../../Images/index';
 import { RootStackParamList } from '../../../Navigation/RootStackPrams';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { CommonActions } from '@react-navigation/native';
 
 type ProfileScreenProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -44,8 +45,15 @@ const Profile: React.FC = () => {
             try {
              
               await AsyncStorage.removeItem('access_token');
+              setProfileData('')
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: 'Login' }],
+                })
+              );
+              // await AsyncStorage.removeItem('profile_data');
               
-             
               navigation.replace('Login');
             } catch (error) {
               console.error('Error logging out:', error);
@@ -73,6 +81,7 @@ const Profile: React.FC = () => {
       }else if (response.success === 1) {
         setLoading(false);
         setProfileData(response.data);
+        await AsyncStorage.setItem('profile_data', JSON.stringify(response.data));
       } else if (response.status === 0) {
         logoutfun(response.message)
         setLoading(false);
@@ -112,6 +121,7 @@ const Profile: React.FC = () => {
     <BodyWarpper>
       {loading && <Loader loading={loading} />}
       <BackHeader onPress={() => {navigation.goBack()}} title="Profile" />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         <View style={styles.profileContainer}>
           <Image
@@ -154,6 +164,7 @@ const Profile: React.FC = () => {
               <Text style={styles.logoutButtonText}>Logout</Text>
             </Pressable>
       </View>
+      </ScrollView>
     </BodyWarpper>
   );
 };

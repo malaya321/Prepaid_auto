@@ -23,34 +23,40 @@ export const styles = StyleSheet.create({
       username: {
         fontSize: 24,
         fontWeight: 'bold',
+        color:"#36454F"
       },
       infoContainer: {
-        // backgroundColor: '#f2f2f2',
+        //  backgroundColor: '#f2f2f2',
         // padding: 50,
         borderRadius: 10,
-        width:'95%',
+        width:'100%',
         alignSelf:'center',
-        marginBottom:20,
-       
+         marginBottom:20,
+       marginTop:30
       
        
       },
       infoText: {
         fontSize: 16,
         fontWeight:'600',
-        paddingLeft:20
-        
+        paddingLeft:20,
+        color:'#585858'
       },
       textcontainer:{
-        backgroundColor:'#F6F8F7',
-        marginBottom: 20,
-        padding:20,
-        borderRadius:10,
+        // backgroundColor:'#F6F8F7',
+        // marginBottom: 20,
+        paddingBottom:25,
+        //  padding:10,
+        // borderRadius:10,
         // width:'100%',
-        elevation:2,
+        // elevation:2,
         flexDirection:'row',
        alignItems:'center',
-       overflow:'hidden'
+       overflow:'hidden',
+      //  borderWidth:2,
+      //  borderColor:'#F6F8F7',
+      width:'95%',
+      alignSelf:'center'
       },
       textinfopngs:{
         height:30,
@@ -63,8 +69,8 @@ export const styles = StyleSheet.create({
         borderRadius: 3,
         width:"95%",
         alignSelf:'center',
-        elevation:2,
-        // marginTop:20
+         elevation:2,
+         marginTop:40
       },
       logoutButtonText: {
         color: '#fff',
@@ -73,5 +79,8 @@ export const styles = StyleSheet.create({
         textAlign:'center'
        
       },
+      scrollContainer:{
+        flexGrow: 1,
+      }
 
 })
