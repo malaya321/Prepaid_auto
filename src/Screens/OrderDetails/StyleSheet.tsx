@@ -17,22 +17,28 @@ export const styles = StyleSheet.create({
         fontSize:20,
         fontWeight:'600',
         marginBottom:10,
-        paddingLeft:9
+        paddingLeft:9,
+        color:Colors.black
     },
     bookingid:{
-        fontSize:10,
+        fontSize:20,
         marginBottom:5,
-        paddingLeft:10
+        paddingLeft:10,
+        color:Colors.black,
+        fontWeight:'600'
     },
     customernameanddate:{
         marginBottom:5,
-        paddingLeft:10
+        paddingLeft:10,
+        fontSize:15,
+        color:Colors.black
     },
     tripheader:{
-        fontSize:15,
+        fontSize:18,
         fontWeight:'600',
         marginTop:20,
-        marginLeft:10
+        marginLeft:10,
+        color:Colors.black
     },
     secondbox:{
         backgroundColor:'#ffff',
@@ -45,7 +51,9 @@ export const styles = StyleSheet.create({
     tripdetails:{
         marginBottom:5,
         marginTop:5,
-        paddingLeft:10
+        paddingLeft:10,
+        fontSize:15,
+        color:Colors.black
         
     }
   

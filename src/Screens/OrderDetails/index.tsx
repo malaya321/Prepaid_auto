@@ -9,6 +9,7 @@ import BackHeader from '../../Components/Backheader';
 import {styles} from './StyleSheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CallApi} from '../../CallApi';
+import Colors from '../../Constans/Colors';
 
 type OrderDetailsScreenProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -110,6 +111,12 @@ const OrderDetails = (prop: any) => {
           </Text>
           <Text style={styles.tripdetails}>
             Drop code : {orderData.drop_code}
+          </Text>
+          <Text style={styles.tripdetails}>
+          Vehicle Type : {orderData.vehicle_type}
+          </Text>
+          <Text style={styles.tripdetails}>
+          Ride Category : <Text style={{color:orderData.is_sharing==='yes'?Colors.green:Colors.Primary}}>{orderData?.is_sharing==='yes'?'Shared':'Reserved'}</Text>
           </Text>
         </View>
       </View>

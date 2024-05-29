@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "855398969588",
+    "project_id": "prepaid-auto-b04cc",
+    "storage_bucket": "prepaid-auto-b04cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855398969588:android:2799ab3b0d8e338fce6ea1",
+        "android_client_info": {
+          "package_name": "com.prepaid_auto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-1a-7Tc7S726sG4aREWoHyjbZWUbRlig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

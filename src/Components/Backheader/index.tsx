@@ -27,7 +27,9 @@ const BackHeader: React.FC<BackHeaderProps> = ({ onPress,title }) => {
 
       <View style={{ width: '85%', padding: verticalScale(10),
     paddingLeft:0 }}>
-        <Text style={{fontFamily:CommonFonts.buttonTextFont}}>{title}</Text>
+        <Text style={{
+          // fontFamily:CommonFonts.buttonTextFont,
+          fontWeight:'600',color:Colors.black,fontSize:17}}>{title}</Text>
       </View> 
     </View>
   );

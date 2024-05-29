@@ -247,10 +247,10 @@ const Dashboard = () => {
       // driver_mobile_number: '8018364674',
     });
     setLoading(true);
-    console.log(requestData);
+    // console.log(requestData);
     try {
       const response = await CallApi('POST', 'manage_driver', requestData);
-      console.log(response, 'myresponse--->');
+      // console.log(response, 'myresponse--->');
       if(response.block_status=== 1){
         logoutfun(response.message)
         setLoading(false);
@@ -339,7 +339,7 @@ setDatePickerModal(true)
             <Pressable
               style={{width: '43%', marginLeft: '2%'}}
               onPress={() => navigation.navigate('Profile')}>
-              <Text>{profileData?.driver_name}</Text>
+              <Text style={{fontWeight:'600',color:Colors.black,fontSize:17}}>{profileData?.driver_name}</Text>
             </Pressable>
             <Pressable
               style={{
@@ -351,7 +351,7 @@ setDatePickerModal(true)
                 borderRadius: 5,
               }}
               onPress={() => setFiltershow(!filtershow)}>
-              <Text>Filter</Text>
+              <Text style={{fontWeight:'600',color:Colors.black,fontSize:17}}>Filter</Text>
             </Pressable>
 
             <Pressable
@@ -360,7 +360,7 @@ setDatePickerModal(true)
                 height: 40,
                 justifyContent: 'center',
                 alignItems: 'flex-end',
-              }}>
+              }} onPress={()=>navigation.navigate('Notification')}>
               {/* <Text>ddd</Text> */}
               <Icons
                 type="FontAwesome"
@@ -512,6 +512,14 @@ setDatePickerModal(true)
               <View style={styles.textcontainer}>
                 <Text style={styles.nametext}>Name:</Text>
                 <Text style={styles.valuetext}>{item.customer_name}</Text>
+              </View>
+              <View style={styles.textcontainer}>
+                <Text style={styles.nametext}>Vehicle Type:</Text>
+                <Text style={styles.valuetext}>{item.vehicle_type}</Text>
+              </View>
+              <View style={styles.textcontainer}>
+                <Text style={styles.nametext}>Ride Category:</Text>
+                <Text style={{...styles.valuetext,color:item.is_sharing==='yes'?Colors.green:Colors.Primary}}> {item?.is_sharing==='yes'?'Shared':'Reserved'}</Text>
               </View>
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
